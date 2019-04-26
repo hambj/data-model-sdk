@@ -20,7 +20,7 @@ export interface ISubscription {
   name: string;
 }
 
-export interface ProfileBody {
+export interface IProfileBody {
   attributes: IProperty[];
   subscriptions: ISubscription[];
   segmentations: ISegmentation[];

@@ -5,7 +5,7 @@ export const environmentUrlMap = {
   prod: "https://www.actito.be/ActitoWebServices/ws/v4"
 };
 
-export var actitoCredentials: IActitoCredentials = {
+export let actitoCredentials: IActitoCredentials = {
   user: "user",
   password: "password",
   entity: "entity",

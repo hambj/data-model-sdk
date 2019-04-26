@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { ProfileBody, ISegmentation, ISubscription } from "../types/types";
+import { IProfileBody, ISegmentation, ISubscription } from "../types/types";
 import { actitoCredentials, environmentUrlMap } from "./init";
 interface IProfile {
   profile: { [key: string]: any };
@@ -15,7 +15,7 @@ export async function getProfile(table: string, profileId: string): Promise<IPro
   if (!response.ok) {
     throw Error(response.statusText);
   }
-  const body: ProfileBody = await response.json();
+  const body: IProfileBody = await response.json();
   const { attributes, subscriptions, segmentations } = body;
   const profile: { [key: string]: any } = {};
   attributes.forEach(({ name, value }) => (profile[name] = value));
