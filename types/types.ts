@@ -1,27 +1,27 @@
-export interface ActitoCredentials {
+export interface IActitoCredentials {
   user: string;
   password: string;
   entity: string;
   env: "test" | "prod";
 }
 
-interface Property {
+export interface IProperty {
   name: string;
   value: string;
 }
 
-export interface Segmentation {
+export interface ISegmentation {
   category: string;
   name: string;
 }
 
-export interface Subscription {
+export interface ISubscription {
   id: number;
   name: string;
 }
 
 export interface ProfileBody {
-  attributes: Property[];
-  subscriptions: Subscription[];
-  segmentations: Segmentation[];
+  attributes: IProperty[];
+  subscriptions: ISubscription[];
+  segmentations: ISegmentation[];
 }

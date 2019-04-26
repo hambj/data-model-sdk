@@ -1,14 +1,13 @@
 import { credentials } from "../../credentials/test-credentials";
-import { getProfile } from "../profiles";
 import { init } from "../init";
+import { getProfile } from "../profiles";
 
 const PROFILE_TABLE = "Clients";
 
 jest.mock("node-fetch", () => ({
   default: jest
     .fn()
-    .mockImplementationOnce((url, { headers }) => {
-      console.log(url, headers);
+    .mockImplementationOnce(() => {
       return {
         ok: false,
         statusText: "Unauthorized"
