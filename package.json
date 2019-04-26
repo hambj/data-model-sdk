@@ -1,7 +1,7 @@
 {
   "name": "@actito/data-model-sdk",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "SDK for ACTITO data model (profile tables, linked tables and content tables)",
   "main": "lib/index.js",
   "scripts": {
@@ -53,6 +53,9 @@
       "json",
       "node"
     ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
@@ -64,5 +67,8 @@
   },
   "dependencies": {
     "node-fetch": "^2.3.0"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }

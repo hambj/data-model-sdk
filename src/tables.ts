@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { IProperty } from "../types/types";
 import { actitoCredentials, environmentUrlMap } from "./init";
+import { IProperty } from "./types";
 
 export async function addRecord(tableId: string, record: object) {
   const auth = "Basic " + Buffer.from(actitoCredentials.user + ":" + actitoCredentials.password).toString("base64");

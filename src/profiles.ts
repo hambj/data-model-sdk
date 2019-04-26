@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { IProfileBody, ISegmentation, ISubscription } from "../types/types";
 import { actitoCredentials, environmentUrlMap } from "./init";
+import { IProfileBody, ISegmentation, ISubscription } from "./types";
 interface IProfile {
   profile: { [key: string]: any };
   subscriptions: ISubscription[];

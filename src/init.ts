@@ -1,4 +1,4 @@
-import { IActitoCredentials } from "../types/types";
+import { IActitoCredentials } from "./types";
 
 export const environmentUrlMap = {
   test: "https://test.actito.be/ActitoWebServices/ws/v4",
