@@ -1,5 +1,6 @@
 import { credentials } from "../../credentials/test-credentials";
-import { init, getProfile } from "../profiles";
+import { getProfile } from "../profiles";
+import { init } from "../init";
 
 const PROFILE_TABLE = "Clients";
 

@@ -1,22 +1,6 @@
 import fetch from "node-fetch";
-import { ActitoCredentials, ProfileBody, Subscription, Segmentation } from "./types";
-
-var actitoCredentials: ActitoCredentials = {
-  user: "user",
-  password: "password",
-  entity: "entity",
-  env: "test"
-};
-
-const environmentUrlMap = {
-  test: "https://test.actito.be/ActitoWebServices/ws/v4",
-  prod: "https://www.actito.be/ActitoWebServices/ws/v4"
-};
-
-export const init = (credentials: ActitoCredentials) => {
-  actitoCredentials = credentials;
-};
-
+import { ProfileBody, Subscription, Segmentation } from "../types/types";
+import { actitoCredentials, environmentUrlMap } from "./init";
 interface Profile {
   profile: { [key: string]: any };
   subscriptions: Subscription[];
