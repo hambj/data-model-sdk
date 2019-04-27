@@ -1,23 +1,34 @@
-import fetch from "node-fetch";
-import { actitoCredentials, environmentUrlMap } from "./init";
-import { IProfileBody, ISegmentation, ISubscription } from "./types";
+import { actitoGet, actitoPost, actitoPut, objectToProperties, propertiesToObject, actitoDelete } from ".";
+import { IAPIProfileBody, IProfileSpec, ISegmentation, ISubscription } from "./types";
 interface IProfile {
   profile: { [key: string]: any };
   subscriptions: ISubscription[];
   segmentations: ISegmentation[];
 }
 
+export async function createProfile(table: string, profileSpec: IProfileSpec): Promise<{ profileId: string }> {
+  const { profile, ...otherSpecs } = profileSpec;
+  const attributes = objectToProperties(profile);
+  return await actitoPost(`table/${table}/profile`, { attributes, ...otherSpecs });
+}
+
 export async function getProfile(table: string, profileId: string): Promise<IProfile> {
-  const auth = "Basic " + Buffer.from(actitoCredentials.user + ":" + actitoCredentials.password).toString("base64");
-  const rootUrl = environmentUrlMap[actitoCredentials.env];
-  const url = `${rootUrl}/entity/${actitoCredentials.entity}/table/${table}/profile/${profileId}`;
-  const response = await fetch(url, { headers: { "Content-Type": "application/json", Authorization: auth } });
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  const body: IProfileBody = await response.json();
-  const { attributes, subscriptions, segmentations } = body;
-  const profile: { [key: string]: any } = {};
-  attributes.forEach(({ name, value }) => (profile[name] = value));
-  return { profile, subscriptions, segmentations };
+  const { attributes, subscriptions, segmentations }: IAPIProfileBody = await actitoGet(
+    `table/${table}/profile/${profileId}`
+  );
+  return { profile: propertiesToObject(attributes), subscriptions, segmentations };
+}
+
+export async function updateProfile(
+  table: string,
+  profileId: string,
+  profileSpec: IProfileSpec
+): Promise<{ profileId: string }> {
+  const { profile, ...otherSpecs } = profileSpec;
+  const attributes = objectToProperties(profile);
+  return await actitoPut(`table/${table}/profile/${profileId}`, { attributes, ...otherSpecs });
+}
+
+export async function deleteProfile(table: string, profileId: string) {
+  await actitoDelete(`table/${table}/profile/${profileId}`);
 }

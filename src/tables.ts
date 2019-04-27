@@ -1,37 +1,19 @@
-import fetch from "node-fetch";
-import { actitoCredentials, environmentUrlMap } from "./init";
-import { IProperty } from "./types";
+import { actitoDelete, actitoGet, actitoPost, actitoPut, objectToProperties, propertiesToObject } from ".";
+import { IAPIProperty } from "./types";
 
 export async function addRecord(tableId: string, record: object) {
-  const auth = "Basic " + Buffer.from(actitoCredentials.user + ":" + actitoCredentials.password).toString("base64");
-  const rootUrl = environmentUrlMap[actitoCredentials.env];
-  const url = `${rootUrl}/entity/${actitoCredentials.entity}/customTable/${tableId}/record`;
-  const properties: IProperty[] = [];
-  Object.entries(record).forEach(([name, value]) => properties.push({ name, value }));
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: auth },
-    body: JSON.stringify({ properties })
-  });
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return await response.json();
+  return actitoPost(`customTable/${tableId}/record`, { properties: objectToProperties(record) });
+}
+
+export async function getRecord(tableId: string, recordId: string) {
+  const { properties }: { properties: IAPIProperty[] } = await actitoGet(`customTable/${tableId}/record/${recordId}`);
+  return propertiesToObject(properties);
 }
 
 export async function updateRecord(tableId: string, recordId: string, record: object) {
-  const auth = "Basic " + Buffer.from(actitoCredentials.user + ":" + actitoCredentials.password).toString("base64");
-  const rootUrl = environmentUrlMap[actitoCredentials.env];
-  const url = `${rootUrl}/entity/${actitoCredentials.entity}/customTable/${tableId}/record/${recordId}`;
-  const properties: IProperty[] = [];
-  Object.entries(record).forEach(([name, value]) => properties.push({ name, value }));
-  const response = await fetch(url, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: auth },
-    body: JSON.stringify({ properties })
-  });
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return await response.json();
+  return await actitoPut(`customTable/${tableId}/record/${recordId}`, { properties: objectToProperties(record) });
+}
+
+export async function deleteRecord(tableId: string, recordId: string) {
+  return await actitoDelete(`customTable/${tableId}/record/${recordId}`);
 }

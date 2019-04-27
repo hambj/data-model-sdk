@@ -1,11 +1,15 @@
-# data-model-sdk
+import { diff } from "deep-diff";
+import { init } from "..";
+import { createProfile, deleteProfile, getProfile, updateProfile } from "../profiles";
+import { addRecord, deleteRecord, getRecord, updateRecord } from "../tables";
 
-|***THIS IS STILL VERY PRELIMINARY. PLEASE DON'T USE.***|
-|---|
+init({
+  user: process.env.WSUSER || "licence/WebService_user",
+  password: process.env.WSPASSWORD || "password",
+  entity: "product",
+  env: "test"
+});
 
-## Example use
-
-```javascript
 async function demoProfiles() {
   const newProfile = { firstName: "Alain", lastName: "Dresse", emailAddress: "ziki@example.com" };
 
@@ -15,7 +19,11 @@ async function demoProfiles() {
   const { profile: updatedProfile } = await getProfile("Clients", profileId);
   await deleteProfile("Clients", profileId);
 
-  console.log({initialProfile, updatedProfile});
+  console.log({
+    initialProfile,
+    updatedProfile,
+    diff: JSON.stringify(diff(initialProfile, updatedProfile), undefined, " ")
+  });
 }
 
 async function demoTables() {
@@ -28,6 +36,12 @@ async function demoTables() {
   const updatedRecord = await getRecord(tableName, id);
   await deleteRecord(tableName, id);
 
-  console.log({initialRecord, updatedRecord});
+  console.log({
+    initialRecord,
+    updatedRecord,
+    diff: JSON.stringify(diff(initialRecord, updatedRecord), undefined, " ")
+  });
 }
-```
+
+demoProfiles();
+demoTables();

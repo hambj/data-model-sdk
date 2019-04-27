@@ -5,9 +5,9 @@ export interface IActitoCredentials {
   env: "test" | "prod";
 }
 
-export interface IProperty {
+export interface IAPIProperty {
   name: string;
-  value: string;
+  value: string | boolean;
 }
 
 export interface ISegmentation {
@@ -20,8 +20,24 @@ export interface ISubscription {
   name: string;
 }
 
-export interface IProfileBody {
-  attributes: IProperty[];
+export interface IAPIProfileBody {
+  attributes: IAPIProperty[];
   subscriptions: ISubscription[];
   segmentations: ISegmentation[];
+  dataCollectionInformation?: {
+    date: string;
+    source: string;
+    way: string;
+  };
+}
+
+export interface IProfileSpec {
+  profile: { [key: string]: string };
+  subscriptions?: ISubscription[];
+  segmentations?: ISegmentation[];
+  dataCollectionInformation?: {
+    date: string;
+    source: string;
+    way: string;
+  };
 }
