@@ -1,4 +1,4 @@
-import { actitoGet, actitoPost, actitoPut, objectToProperties, propertiesToObject, actitoDelete } from ".";
+import { actitoDelete, actitoGet, actitoPost, actitoPut, objectToProperties, propertiesToObject } from ".";
 import { IAPIProfileBody, IProfileSpec, ISegmentation, ISubscription } from "./types";
 interface IProfile {
   profile: { [key: string]: any };
