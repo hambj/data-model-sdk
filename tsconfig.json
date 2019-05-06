@@ -3,9 +3,9 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
+    "rootDir": "./src",
     "outDir": "./lib",
     "strict": true
   },
-  "files": ["./src/profiles.ts", "./src/tables.ts", "./src/init.ts"],
   "exclude": ["node_modules", "**/__tests__/*"]
 }
