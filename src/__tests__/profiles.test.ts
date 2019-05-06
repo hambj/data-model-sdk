@@ -1,5 +1,5 @@
-import { init } from "..";
-import { createProfile, getProfile, updateProfile, deleteProfile } from "../profiles";
+import { init } from "../init";
+import { createProfile, deleteProfile, getProfile, updateProfile } from "../profiles";
 import { IAPIProfileBody } from "../types";
 import { checkLastCall, credentials } from "./helpers";
 
@@ -66,7 +66,7 @@ describe("profile", () => {
   });
 
   it("deletes profile", async () => {
-    mocked.mockImplementationOnce(() => ({ ok: true }));
+    mocked.mockImplementationOnce(() => ({ ok: true, text: () => "" }));
     await deleteProfile(PROFILE_TABLE, "7");
     expectFetch({
       url: "https://test.actito.be/ActitoWebServices/ws/v4/entity/product/table/Clients/profile/7",

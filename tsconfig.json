@@ -6,6 +6,6 @@
     "outDir": "./lib",
     "strict": true
   },
-  "include": ["src"],
+  "files": ["./src/profiles.ts", "./src/tables.ts", "./src/init.ts"],
   "exclude": ["node_modules", "**/__tests__/*"]
 }

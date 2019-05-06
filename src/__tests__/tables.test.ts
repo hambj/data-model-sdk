@@ -1,5 +1,5 @@
-import { init } from "..";
-import { addRecord, getRecord, updateRecord, deleteRecord } from "../tables";
+import { init } from "../init";
+import { addRecord, deleteRecord, getRecord, updateRecord } from "../tables";
 import { checkLastCall, credentials } from "./helpers";
 
 const CUSTOM_TABLE = "OfferAssignments";
@@ -64,7 +64,7 @@ describe("tables", () => {
   });
 
   it("deletes record", async () => {
-    mocked.mockImplementationOnce(() => ({ ok: true }));
+    mocked.mockImplementationOnce(() => ({ ok: true, text: () => "" }));
     await deleteRecord(CUSTOM_TABLE, RECORD_ID);
     expectFetch({
       url: `https://test.actito.be/ActitoWebServices/ws/v4/entity/product/customTable/${CUSTOM_TABLE}/record/${RECORD_ID}`,

@@ -1,5 +1,5 @@
 import { diff } from "deep-diff";
-import { init } from "..";
+import { init } from "../init";
 import { createProfile, deleteProfile, getProfile, updateProfile } from "../profiles";
 import { addRecord, deleteRecord, getRecord, updateRecord } from "../tables";
 
