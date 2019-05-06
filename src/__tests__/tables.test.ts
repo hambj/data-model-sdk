@@ -1,5 +1,5 @@
-import { init } from "..";
-import { addRecord, getRecord, updateRecord, deleteRecord } from "../tables";
+import { init } from "../init";
+import { addRecord, deleteRecord, getRecord, updateRecord } from "../tables";
 import { checkLastCall, credentials } from "./helpers";
 
 const CUSTOM_TABLE = "OfferAssignments";

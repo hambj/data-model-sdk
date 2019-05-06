@@ -1,5 +1,5 @@
-import { init } from "..";
-import { createProfile, getProfile, updateProfile, deleteProfile } from "../profiles";
+import { init } from "../init";
+import { createProfile, deleteProfile, getProfile, updateProfile } from "../profiles";
 import { IAPIProfileBody } from "../types";
 import { checkLastCall, credentials } from "./helpers";
 

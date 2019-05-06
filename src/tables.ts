@@ -1,4 +1,5 @@
-import { actitoDelete, actitoGet, actitoPost, actitoPut, objectToProperties, propertiesToObject } from ".";
+import { actitoDelete, actitoGet, actitoPost, actitoPut } from "./helpers/http";
+import { objectToProperties, propertiesToObject } from "./helpers/translators";
 import { IAPIProperty } from "./types";
 
 export async function addRecord(tableId: string, record: object) {

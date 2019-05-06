@@ -1,0 +1,3 @@
+### list profile tables
+GET https://www.actito.be/ActitoWebServices/ws/v4/entity/{{entity}}/table/Clients/profile
+Authorization: Basic {{ws-token}}
