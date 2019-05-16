@@ -1,6 +1,6 @@
 import { actitoDelete, actitoGet, actitoPost, actitoPut } from "./helpers/http";
 import { apiProfileToProfile, profileToAPIProfile } from "./helpers/translators";
-import { IProfileRecord } from "./types";
+import { IProfileRecord, IAPIProfileBody } from "./types";
 
 export async function createProfile(table: string, profileSpec: IProfileRecord): Promise<{ profileId: string }> {
   return await actitoPost(`table/${table}/profile`, profileToAPIProfile(profileSpec));
@@ -9,6 +9,19 @@ export async function createProfile(table: string, profileSpec: IProfileRecord):
 export async function getProfile(table: string, profileId: string): Promise<IProfileRecord> {
   const apiProfile = await actitoGet(`table/${table}/profile/${profileId}`);
   return apiProfileToProfile(apiProfile);
+}
+
+export async function getProfiles(table: string, search: string, dateFilter?: string, limit?: number): Promise<IProfileRecord[]> {
+  const query =
+    (search != undefined ? `search=${encodeURIComponent(search)}&` : "") +
+    (dateFilter != undefined ? `dateFilter=${encodeURIComponent(dateFilter)}&` : "") +
+    (limit != undefined ? `number=${limit}&` : "");
+  const apiProfiles = await actitoGet(`table/${table}/profile?${query}`);
+  var ret: IProfileRecord[] = [];
+  apiProfiles.profiles.forEach((element: IAPIProfileBody) => {
+    ret.push(apiProfileToProfile(element));
+  });
+  return ret;
 }
 
 export async function updateProfile(
