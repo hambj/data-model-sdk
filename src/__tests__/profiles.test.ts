@@ -1,6 +1,6 @@
 import { init } from "../init";
-import { createProfile, deleteProfile, getProfile, updateProfile } from "../profiles";
-import { IAPIProfileBody } from "../types";
+import { createProfile, deleteProfile, getProfile, getProfiles, updateProfile } from "../profiles";
+import { IAPIProfileBody, IProfileRecord } from "../types";
 import { checkLastCall, credentials } from "./helpers";
 
 const PROFILE_TABLE = "Clients";
@@ -11,6 +11,8 @@ const dummyProfile: IAPIProfileBody = {
   subscriptions: [],
   segmentations: []
 };
+
+const dummyProfiles = { profiles: [dummyProfile] };
 
 jest.mock("node-fetch", () => {
   mocked = jest.fn();
@@ -31,6 +33,21 @@ describe("profile", () => {
     const { profile, subscriptions, segmentations } = await getProfile(PROFILE_TABLE, "7");
     expectFetch({
       url: "https://test.actito.be/ActitoWebServices/ws/v4/entity/product/table/Clients/profile/7",
+      options: { method: "GET" }
+    });
+    expect(profile).toMatchObject({ profileId: "7" });
+    expect(subscriptions).toBeInstanceOf(Array);
+    expect(segmentations).toBeInstanceOf(Array);
+    return profile;
+  });
+
+  it("gets profiles", async () => {
+    mocked.mockImplementationOnce(() => ({ ok: true, json: () => dummyProfiles }));
+    const profiles: IProfileRecord[] = await getProfiles(PROFILE_TABLE, "profileId=7");
+    expect(profiles.length).toEqual(1);
+    const { profile, subscriptions, segmentations } = profiles[0];
+    expectFetch({
+      url: "https://test.actito.be/ActitoWebServices/ws/v4/entity/product/table/Clients/profile?search=profileId%3D7&",
       options: { method: "GET" }
     });
     expect(profile).toMatchObject({ profileId: "7" });
