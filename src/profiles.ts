@@ -11,6 +11,20 @@ export async function getProfile(table: string, profileId: string): Promise<IPro
   return apiProfileToProfile(apiProfile);
 }
 
+export async function getProfiles(
+  table: string,
+  search: string,
+  dateFilter?: string,
+  limit?: number
+): Promise<IProfileRecord[]> {
+  const query =
+    (search !== undefined ? `search=${encodeURIComponent(search)}&` : "") +
+    (dateFilter !== undefined ? `dateFilter=${encodeURIComponent(dateFilter)}&` : "") +
+    (limit !== undefined ? `number=${limit}&` : "");
+  const apiProfiles = await actitoGet(`table/${table}/profile?${query}`);
+  return apiProfiles.profiles.map(apiProfileToProfile);
+}
+
 export async function updateProfile(
   table: string,
   profileId: string,

@@ -1,7 +1,7 @@
 {
   "name": "@actito/data-model-sdk",
   "private": false,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "SDK for ACTITO data model (profile tables, linked tables and content tables)",
   "main": "lib/index.js",
   "scripts": {
@@ -30,13 +30,13 @@
   "homepage": "https://github.com/actito/data-model-sdk#readme",
   "devDependencies": {
     "@types/deep-diff": "^1.0.0",
-    "@types/jest": "^24.0.11",
-    "@types/node": "^11.13.7",
-    "@types/node-fetch": "^2.3.3",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^11.13.10",
+    "@types/node-fetch": "^2.3.4",
     "deep-diff": "^1.0.2",
-    "jest": "^24.7.1",
+    "jest": "^24.8.0",
     "jest-fetch-mock": "^2.1.2",
-    "prettier": "^1.17.0",
+    "prettier": "^1.17.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
@@ -70,7 +70,7 @@
     "printWidth": 120
   },
   "dependencies": {
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.6.0"
   },
   "directories": {
     "lib": "lib"
