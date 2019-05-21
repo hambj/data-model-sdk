@@ -20,6 +20,13 @@ const dummyRecordProperties = {
   ]
 };
 
+const dummyRecordsProperties =
+{
+  records: [
+    dummyRecordProperties
+  ]
+};
+
 const dummyRecord = {
   synchronized: true,
   offerReference: "springoffer",
@@ -46,7 +53,7 @@ describe("tables", () => {
   });
 
   it("fetches records", async () => {
-    mocked.mockImplementationOnce(() => ({ ok: true, json: () => [dummyRecordProperties] }));
+    mocked.mockImplementationOnce(() => ({ ok: true, json: () => dummyRecordsProperties }));
     const records = await getRecords(CUSTOM_TABLE, { searchField: SEARCH_FIELD, searchValue: SEARCH_VALUE }, { sortedField: SORTED_FIELD, ascending: ASCENDING }, LIMIT);
     expect(records.length).toEqual(1);
     expectFetch({
