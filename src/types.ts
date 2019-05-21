@@ -10,19 +10,29 @@ export interface IAPIProperty {
   value: string | boolean;
 }
 
+export interface IAPISearch {
+  searchField: string;
+  searchValue: string;
+}
+
+export interface IAPISort {
+  sortedField: string;
+  ascending: boolean;
+}
+
 // TODO: add translator for segmentation
 export type ISegmentation =
   | {
-      category: string;
-      name: string;
-    }
+    category: string;
+    name: string;
+  }
   | {
-      belongs: true;
-      segmentation: {
-        category: "string";
-        name: "string";
-      };
+    belongs: true;
+    segmentation: {
+      category: "string";
+      name: "string";
     };
+  };
 
 // TODO: add translator for subscription
 export interface ISubscription {
