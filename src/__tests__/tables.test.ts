@@ -1,5 +1,5 @@
 import { init } from "../init";
-import { addRecord, deleteRecord, getRecord, updateRecord } from "../tables";
+import { addRecord, deleteRecord, getRecord, increment, updateRecord } from "../tables";
 import { checkLastCall, credentials } from "./helpers";
 
 const CUSTOM_TABLE = "OfferAssignments";
@@ -69,6 +69,30 @@ describe("tables", () => {
     expectFetch({
       url: `https://test.actito.be/ActitoWebServices/ws/v4/entity/product/customTable/${CUSTOM_TABLE}/record/${RECORD_ID}`,
       options: { method: "DELETE" }
+    });
+  });
+
+  it("increments record", async () => {
+    mocked.mockImplementationOnce(() => ({ ok: true, json: () => ({ properties: [{ name: "value", value: 1 }] }) }));
+    await increment(CUSTOM_TABLE, RECORD_ID, "value", 1);
+    expectFetch({
+      url: `https://test.actito.be/ActitoWebServices/ws/v4/entity/product/customTable/${CUSTOM_TABLE}/record/${RECORD_ID}`,
+      options: {
+        method: "PUT",
+        body: JSON.stringify({ properties: [{ name: "value", value: 2 }] })
+      }
+    });
+  });
+
+  it("increments undefined field in record", async () => {
+    mocked.mockImplementationOnce(() => ({ ok: true, json: () => ({ properties: [{ name: "value", value: 1 }] }) }));
+    await increment(CUSTOM_TABLE, RECORD_ID, "otherValue", 1);
+    expectFetch({
+      url: `https://test.actito.be/ActitoWebServices/ws/v4/entity/product/customTable/${CUSTOM_TABLE}/record/${RECORD_ID}`,
+      options: {
+        method: "PUT",
+        body: JSON.stringify({ properties: [{ name: "otherValue", value: 1 }] })
+      }
     });
   });
 });
