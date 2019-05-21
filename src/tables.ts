@@ -16,11 +16,11 @@ export async function getRecords(tableId: string, search?: IAPISearch, sort?: IA
     (search != undefined ? `searchField=${encodeURIComponent(search.searchField)}&searchValue=${encodeURIComponent(search.searchValue)}&` : "") +
     (sort != undefined ? `sortedField=${encodeURIComponent(sort.sortedField)}&ascending=${sort.ascending}&` : "") +
     (limit != undefined ? `number=${limit}&` : "");
-  const elements: [{ properties: IAPIProperty[] }] = await actitoGet(`customTable/${tableId}/record?${query}`);
+  const elements: { records: [{ properties: IAPIProperty[] }] } = await actitoGet(`customTable/${tableId}/record?${query}`);
   var ret: {
     [key: string]: any;
   }[] = [];
-  elements.forEach((element) => {
+  elements.records.forEach((element) => {
     ret.push(propertiesToObject(element.properties));
   });
   return ret;
