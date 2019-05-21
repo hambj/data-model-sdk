@@ -30,6 +30,12 @@ export async function updateRecord(tableId: string, recordId: string, record: ob
   return await actitoPut(`customTable/${tableId}/record/${recordId}`, { properties: objectToProperties(record) });
 }
 
+export async function increment(tableId: string, recordId: string, field: string, incrementValue: number) {
+  const record = await getRecord(tableId, recordId);
+  const previousValue: number = record[field] || 0;
+  await updateRecord(tableId, recordId, { [field]: previousValue + incrementValue });
+}
+
 export async function deleteRecord(tableId: string, recordId: string) {
   return await actitoDelete(`customTable/${tableId}/record/${recordId}`);
 }
