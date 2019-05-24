@@ -13,21 +13,25 @@ export async function getRecord(tableId: string, recordId: string) {
 
 export async function getRecords(tableId: string, search?: IAPISearch, sort?: IAPISort, limit?: number) {
   const query =
-    (search != undefined ? `searchField=${encodeURIComponent(search.searchField)}&searchValue=${encodeURIComponent(search.searchValue)}&` : "") +
-    (sort != undefined ? `sortedField=${encodeURIComponent(sort.sortedField)}&ascending=${sort.ascending}&` : "") +
-    (limit != undefined ? `number=${limit}&` : "");
-  const elements: [{ properties: IAPIProperty[] }] = await actitoGet(`customTable/${tableId}/record?${query}`);
-  var ret: {
-    [key: string]: any;
-  }[] = [];
-  elements.forEach((element) => {
-    ret.push(propertiesToObject(element.properties));
-  });
-  return ret;
+    (search !== undefined
+      ? `searchField=${encodeURIComponent(search.searchField)}&searchValue=${encodeURIComponent(search.searchValue)}&`
+      : "") +
+    (sort !== undefined ? `sortedField=${encodeURIComponent(sort.sortedField)}&ascending=${sort.ascending}&` : "") +
+    (limit !== undefined ? `number=${limit}&` : "");
+  const elements: { records: [{ properties: IAPIProperty[] }] } = await actitoGet(
+    `customTable/${tableId}/record?${query}`
+  );
+  return elements.records.map(record => propertiesToObject(record.properties));
 }
 
 export async function updateRecord(tableId: string, recordId: string, record: object) {
   return await actitoPut(`customTable/${tableId}/record/${recordId}`, { properties: objectToProperties(record) });
+}
+
+export async function increment(tableId: string, recordId: string, field: string, incrementValue: number) {
+  const record = await getRecord(tableId, recordId);
+  const previousValue: number = record[field] || 0;
+  await updateRecord(tableId, recordId, { [field]: previousValue + incrementValue });
 }
 
 export async function deleteRecord(tableId: string, recordId: string) {
